@@ -5,4 +5,5 @@ class Account(BaseModel):
     revenue: float
 
 class AccountList(BaseModel):
+    totalSize: int
     accounts: list[Account]

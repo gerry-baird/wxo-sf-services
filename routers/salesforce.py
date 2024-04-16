@@ -60,12 +60,13 @@ def top_accounts() -> AccountList:
     records = raw_response["records"]
 
     temp_list = []
-    for record in records:
-        account_name = record["Name"]
-        revenue = record["AnnualRevenue"]
+    record_count = len(records)
+    for count, value in enumerate(records):
+        account_name = value["Name"]
+        revenue = value["AnnualRevenue"]
         acc = Account(name=account_name, revenue=revenue)
         temp_list.append(acc)
 
-    account_list = AccountList(accounts=temp_list)
+    account_list = AccountList(accounts=temp_list, totalSize=record_count)
 
     return account_list
