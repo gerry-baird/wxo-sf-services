@@ -52,7 +52,7 @@ def fetch_data(token: str, query: str):
                description='Get a list of accounts with the largest revenue')
 def top_accounts() -> AccountList:
     token = get_token()
-    query = "SELECT Name, AnnualRevenue FROM Account WHERE AnnualRevenue > 0 ORDER BY AnnualRevenue DESC"
+    query = "SELECT AccountNumber, Name, AnnualRevenue FROM Account WHERE AnnualRevenue > 0 ORDER BY AnnualRevenue DESC"
 
     raw_response = fetch_data(token, query)
 
@@ -64,9 +64,10 @@ def top_accounts() -> AccountList:
     for count, value in enumerate(records):
         account_name = value["Name"]
         revenue = value["AnnualRevenue"]
-        acc = Account(name=account_name, revenue=revenue)
+        id = value["AccountNumber"]
+        acc = Account(id=id, name=account_name, revenue=revenue)
         temp_list.append(acc)
 
-    account_list = AccountList(accounts=temp_list, totalSize=record_count)
+    account_list = AccountList(records=temp_list, totalSize=record_count)
 
     return account_list

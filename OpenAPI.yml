@@ -38,14 +38,19 @@ components:
       title: Account
     AccountList:
       properties:
-        accounts:
+        totalSize:
+          type: integer
+          title: Totalsize
+          x-ibm-show: false
+        records:
           items:
             $ref: '#/components/schemas/Account'
           type: array
-          title: Accounts
+          title: Records
       type: object
       required:
-        - accounts
+        - totalSize
+        - records
       title: AccountList
   securitySchemes:
     HTTPBasic:
