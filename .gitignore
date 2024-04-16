@@ -9,6 +9,7 @@ __pycache__/
 .env
 
 .idea/vcs.xml
+.idea/
 
 # C extensions
 *.so
