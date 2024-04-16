@@ -3,9 +3,8 @@ info:
   title: WxO SF Services
   description: WxO SF Services
   version: '1.0'
-  x-ibm-application-icon: <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 52.18"><text transform="translate(0 40.18)" style="fill:#2e3192; font-family:MyriadPro-Regular, &apos;Myriad Pro&apos;; font-size:48px;"><tspan x="0" y="0">L3</tspan></text></svg>
 servers:
-  - url: https://wxo-l3-services.1d13bpwyy9q7.us-east.codeengine.appdomain.cloud
+  - url: https://wxo-sf-services.1d13bpwyy9q7.us-east.codeengine.appdomain.cloud
 paths:
   /top_accounts:
     get:
@@ -19,12 +18,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountList'
-      security:
-        - HTTPBasic: []
 components:
   schemas:
     Account:
       properties:
+        id:
+          type: string
+          title: Id
         name:
           type: string
           title: Name
@@ -33,6 +33,7 @@ components:
           title: Revenue
       type: object
       required:
+        - id
         - name
         - revenue
       title: Account
@@ -41,7 +42,6 @@ components:
         totalSize:
           type: integer
           title: Totalsize
-          x-ibm-show: false
         records:
           items:
             $ref: '#/components/schemas/Account'
