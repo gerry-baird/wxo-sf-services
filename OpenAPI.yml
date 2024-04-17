@@ -52,6 +52,38 @@ components:
         - totalSize
         - records
       title: AccountList
+    Contact:
+      properties:
+        name:
+          type: string
+          title: Name
+        title:
+          type: string
+          title: Title
+        email:
+          type: string
+          title: Email
+      type: object
+      required:
+        - name
+        - title
+        - email
+      title: Contact
+    ContactList:
+      properties:
+        totalSize:
+          type: integer
+          title: Totalsize
+        records:
+          items:
+            $ref: '#/components/schemas/Contact'
+          type: array
+          title: Records
+      type: object
+      required:
+        - totalSize
+        - records
+      title: ContactList
   securitySchemes:
     HTTPBasic:
       type: http

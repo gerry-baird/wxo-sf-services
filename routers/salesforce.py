@@ -4,6 +4,7 @@ import json
 from fastapi import APIRouter
 from dotenv import load_dotenv
 from models.Account import Account, AccountList
+from models.Contact import Contact, ContactList
 
 sf_router = APIRouter()
 load_dotenv()
@@ -52,7 +53,7 @@ def fetch_data(token: str, query: str):
                description='Get a list of accounts with the largest revenue')
 def top_accounts() -> AccountList:
     token = get_token()
-    query = "SELECT AccountNumber, Name, AnnualRevenue FROM Account WHERE AnnualRevenue > 0 ORDER BY AnnualRevenue DESC"
+    query = "SELECT Id, Name, AnnualRevenue FROM Account WHERE AnnualRevenue > 0 ORDER BY AnnualRevenue DESC"
 
     raw_response = fetch_data(token, query)
 
@@ -62,12 +63,35 @@ def top_accounts() -> AccountList:
     temp_list = []
     record_count = len(records)
     for count, value in enumerate(records):
+        account_id = value["Id"]
         account_name = value["Name"]
-        revenue = value["AnnualRevenue"]
-        id = value["AccountNumber"]
-        acc = Account(id=id, name=account_name, revenue=revenue)
+        account_revenue = value["AnnualRevenue"]
+
+        acc = Account(id=account_id, name=account_name, revenue=account_revenue)
         temp_list.append(acc)
 
     account_list = AccountList(records=temp_list, totalSize=record_count)
-
     return account_list
+
+@sf_router.get("/contacts",
+               summary='Contacts for Account',
+               description='Get a list of contacts for an account')
+def contacts_by_account(id: str) -> ContactList:
+    token = get_token()
+    query = f"SELECT Name, Title, Email FROM Contact WHERE Account.Id = '{id}'"
+
+    raw_response = fetch_data(token, query)
+    records = raw_response["records"]
+    temp_list = []
+    record_count = len(records)
+
+    for count, value in enumerate(records):
+        contact_name = value["Name"]
+        contact_title = value["Title"]
+        contact_email = value["Email"]
+
+        con = Contact(name=contact_name, title=contact_title, email=contact_email)
+        temp_list.append(con)
+
+    contact_list = ContactList(records=temp_list, totalSize=record_count)
+    return contact_list
