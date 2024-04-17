@@ -18,6 +18,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountList'
+  /contacts:
+    get:
+      summary: Contacts for Account
+      description: Get a list of contacts for an account
+      operationId: contacts_by_account
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactList'
 components:
   schemas:
     Account:
