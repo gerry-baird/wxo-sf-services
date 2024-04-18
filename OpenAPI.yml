@@ -61,6 +61,7 @@ components:
         totalSize:
           type: integer
           title: Totalsize
+          x-ibm-show: false
         records:
           items:
             $ref: '#/components/schemas/Account'
@@ -93,6 +94,7 @@ components:
         totalSize:
           type: integer
           title: Totalsize
+          x-ibm-show: false
         records:
           items:
             $ref: '#/components/schemas/Contact'
